@@ -41,8 +41,8 @@ static void ring_buffer_copy_in(ring_buffer_t* ring_buf, const void* buffer, uin
     if(len > size - index)
         l = size - index;
 
-    memcpy(ring_buf->data + index, buffer, l);
-    memcpy(ring_buf->data, buffer + l, len - l);
+    memcpy(ring_buf->data + index, (uint8_t *)buffer, l);
+    memcpy(ring_buf->data, (uint8_t *)buffer + l, len - l);
 }
 
 uint32_t ring_buffer_write(ring_buffer_t* ring_buf, const void* src, uint32_t len)
@@ -70,8 +70,8 @@ static void ring_buffer_copy_out(ring_buffer_t* ring_buf, void* buffer, uint32_t
     if(len > size - index)
         l = size - index;
 
-    memcpy(buffer, ring_buf->data + index, l);
-    memcpy(buffer + l, ring_buf->data, len - l);
+    memcpy((uint8_t *)buffer, ring_buf->data + index, l);
+    memcpy((uint8_t *)buffer + l, ring_buf->data, len - l);
 
 }
 
