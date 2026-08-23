@@ -14,7 +14,7 @@ bool uart_dma_init(uart_dma_t *uart_dma, uart_dma_dev_t *dev, uint8_t *dma_buffe
     uart_dma->buffer = dma_buffer;
     uart_dma->buffer_size = dma_buffer_size;
 
-    ring_buffer_init(&uart_dma->rx_buffer, ring_buffer, dma_buffer_size, 1);
+    ring_buffer_init(&uart_dma->rx_buffer, ring_buffer, ring_buffer_size, 1);
 
     uart_dma->last_pos = 0;
 
