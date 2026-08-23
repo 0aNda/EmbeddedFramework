@@ -114,16 +114,18 @@ bool uart_dma_port_init(void *data)
 	return true;
 }
 
+extern uart_dma_t uart_dma;
+
 void DMA1_Channel3_IRQHandler(void)
 {
     if (DMA_GetITStatus(DMA1_IT_TC3) != RESET) {
         DMA_ClearITPendingBit(DMA1_IT_TC3);
-        uart_dma_tc_irq(NULL);
+        uart_dma_tc_irq(&uart_dma);
     }
 
     if (DMA_GetITStatus(DMA1_IT_HT3) != RESET) {
         DMA_ClearITPendingBit(DMA1_IT_HT3);
-        uart_dma_ht_irq(NULL);
+        uart_dma_ht_irq(&uart_dma);
     }
 
 }
@@ -131,7 +133,7 @@ void DMA1_Channel3_IRQHandler(void)
 void USART3_IRQHandler(void) 
 {
     if(USART_GetITStatus(USART3, USART_IT_IDLE) != RESET) {
-        uart_dma_idle_irq(NULL);
+        uart_dma_idle_irq(&uart_dma);
         USART_ReceiveData(USART3); // 清除空闲中断标志
     }
 }

@@ -11,7 +11,7 @@
 
 #include "uart_dma.h"
 
-#define RX_BUF_SIZE 512
+#define RX_BUF_SIZE 256
 extern uint8_t rxBuffer[RX_BUF_SIZE];
 
 typedef struct {

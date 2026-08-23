@@ -23,30 +23,24 @@ bool uart_dma_init(uart_dma_t *uart_dma, uart_dma_dev_t *dev, uint8_t *dma_buffe
     return uart_dma->dev->ops->init(uart_dma->dev->context);
 }
 
-static volatile uint8_t uart_dma_ht_flag = 0;
-static volatile uint8_t uart_dma_tc_flag = 0;
-static volatile uint8_t uart_dma_idle_flag = 0;
-
-static volatile uint8_t uart_dma_overflow_flag = 0;
-
-void uart_dma_idle_irq(void *data)
+void uart_dma_idle_irq(uart_dma_t *uart_dma)
 {
-    uart_dma_idle_flag = 1;
+    uart_dma->uart_dma_idle_flag = 1;
 }
 
-void uart_dma_ht_irq(void *data)
+void uart_dma_ht_irq(uart_dma_t *uart_dma)
 {
-    uart_dma_ht_flag = 1;
+    uart_dma->uart_dma_ht_flag = 1;
 }
 
-void uart_dma_tc_irq(void *data)
+void uart_dma_tc_irq(uart_dma_t *uart_dma)
 {
-    uart_dma_tc_flag = 1;
+    uart_dma->uart_dma_tc_flag = 1;
 }
 
 void uart_dma_process(uart_dma_t *uart_dma)
 {
-    if(uart_dma_idle_flag || uart_dma_ht_flag || uart_dma_tc_flag)
+    if(uart_dma->uart_dma_idle_flag || uart_dma->uart_dma_ht_flag || uart_dma->uart_dma_tc_flag)
     {
         size_t cur_pos = uart_dma->dev->ops->get_pos(uart_dma->dev->context);
         size_t last_pos = uart_dma->last_pos;
@@ -61,9 +55,9 @@ void uart_dma_process(uart_dma_t *uart_dma)
             ring_buffer_write(&uart_dma->rx_buffer, &uart_dma->buffer[0], cur_pos);
         }
 
-        uart_dma_idle_flag = 0;
-        uart_dma_ht_flag = 0;
-        uart_dma_tc_flag = 0;
+        uart_dma->uart_dma_idle_flag = 0;
+        uart_dma->uart_dma_ht_flag = 0;
+        uart_dma->uart_dma_tc_flag = 0;
 
         uart_dma->last_pos = cur_pos;
 

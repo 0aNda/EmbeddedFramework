@@ -18,14 +18,18 @@ typedef struct {
     size_t last_pos;
 
     event_type_t *rx_event;
+
+    volatile uint8_t uart_dma_ht_flag;
+    volatile uint8_t uart_dma_tc_flag;
+    volatile uint8_t uart_dma_idle_flag;
 } uart_dma_t;
 
 bool uart_dma_init(uart_dma_t *uart_dma, uart_dma_dev_t *dev, uint8_t *dma_buffer, size_t dma_buffer_size,
                    uint8_t *ring_buffer, size_t ring_buffer_size, event_type_t *rx_event);
 
-void uart_dma_idle_irq(void *data);
-void uart_dma_ht_irq(void *data);
-void uart_dma_tc_irq(void *data);
+void uart_dma_idle_irq(uart_dma_t *uart_dma);
+void uart_dma_ht_irq(uart_dma_t *uart_dma);
+void uart_dma_tc_irq(uart_dma_t *uart_dma);
 
 void uart_dma_process(uart_dma_t *uart_dma);
 size_t uart_dma_read(uart_dma_t *uart_dma, uint8_t *buffer, size_t len);
