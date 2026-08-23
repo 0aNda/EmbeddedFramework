@@ -1,0 +1,1 @@
+uart_dma框架需要EmbeddedFramework下的event_bus和ring_buffer
