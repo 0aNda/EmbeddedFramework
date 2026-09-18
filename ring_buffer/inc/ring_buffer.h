@@ -7,8 +7,8 @@
 #include <string.h>
 
 typedef struct{
-    uint32_t    in;
-    uint32_t    out;
+    volatile uint32_t    in;
+    volatile uint32_t    out;
     uint32_t    mask;
     uint8_t     *data;
     uint32_t    e_size;
