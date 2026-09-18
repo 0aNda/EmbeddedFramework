@@ -18,6 +18,7 @@ bool ring_buffer_init(ring_buffer_t* ring_buf, void* buffer, uint32_t buff_size,
 bool ring_buffer_is_empty(const ring_buffer_t* ring_buf);
 bool ring_buffer_is_full(const ring_buffer_t* ring_buf);
 uint32_t ring_buffer_write(ring_buffer_t* ring_buf, const void* src, uint32_t len);
+uint8_t ring_buffer_write_char(ring_buffer_t* ring_buf, const uint8_t byte);
 uint32_t ring_buffer_read(ring_buffer_t* ring_buf, void* buffer, uint32_t len);
 uint32_t ring_buffer_data_len(const ring_buffer_t* ring_buf);
 uint32_t ring_buffer_free_len(const ring_buffer_t* ring_buf);

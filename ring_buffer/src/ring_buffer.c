@@ -61,6 +61,17 @@ uint32_t ring_buffer_write(ring_buffer_t* ring_buf, const void* src, uint32_t le
     return len;
 }
 
+uint8_t ring_buffer_write_char(ring_buffer_t* ring_buf, const uint8_t byte)
+{
+    if(ring_buffer_is_full(ring_buf))
+        return 0;
+        
+    ring_buf->data[ring_buf->in & ring_buf->mask] = byte;
+    ring_buf->in++;
+
+    return 1;
+}
+
 static void ring_buffer_copy_out(ring_buffer_t* ring_buf, void* buffer, uint32_t len)
 {
     uint32_t index = (ring_buf->out & ring_buf->mask) * ring_buf->e_size;
